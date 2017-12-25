@@ -1,20 +1,24 @@
 import React, {Component} from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import RaisedButton from 'material-ui/RaisedButton';
-import NavDrawer from '../components/NavDrawer';
+import NavDrawerAppBar from '../components/NavDrawerAppBar';
+import {Main} from '../tinycomps/TemplateComps';
 
 injectTapEventPlugin();
 class Template extends Component {
 
     render(){
+      const background = {
+        backgroundColor: "#fafafa"
+      }
+
       return (
         <MuiThemeProvider>
-          <div>
-            <NavDrawer/>
-            <main>
+          <div style = {background}>
+            <NavDrawerAppBar/>
+            <Main>
               {this.props.children}
-            </main>
+            </Main>
           </div>
         </MuiThemeProvider>
       );
