@@ -1,0 +1,30 @@
+{
+  "user" : {
+    "name" : "Santosh",
+    "email" : "santosh@catchup.com",
+    "authenticated":false
+  },
+  "messages" :[{
+    "id" : 0,
+    "type" : "sent",
+    "content" : "Welcome to Catchup",
+    "sender" : "Santosh",
+    "received" : "",
+    "rcontent" : "",
+    "rsender" : "",
+    "rreceived" : "",
+    "isemo" : false
+    }
+  ],
+  "buddies" : [
+    {
+      "name" : "abd",
+      "email" : "abd@catchup.com"
+    },
+    {
+      "name" : "xyz",
+      "email" : "xyz@catchup.com"
+    }
+  ],
+  "errors" : []
+}

@@ -8,6 +8,7 @@ import Chat from 'material-ui/svg-icons/communication/chat';
 import Play from 'material-ui/svg-icons/av/games';
 import Music from 'material-ui/svg-icons/image/audiotrack';
 import Profile from 'material-ui/svg-icons/social/person';
+import User from './UserContainer';
 
 const styles = {
   linkStyle: {
@@ -21,7 +22,7 @@ const styles = {
 class NavDrawerAppBar extends Component{
   constructor(props) {
     super(props);
-    this.state = {open: false};
+    this.state = {open: false,authenticated: false};
   }
 
   handleToggle = () => this.setState({open: !this.state.open});
@@ -42,13 +43,7 @@ class NavDrawerAppBar extends Component{
           docked={false}
           open = {this.state.open}
           onRequestChange={(open) => this.setState({open})}>
-          <div
-          style = {
-            { height: '200px',
-              width: '100%',
-              backgroundColor : '#E57373',
-          }}
-          ></div>
+          <User/>
           <Divider/>
           <Link style = {styles.linkStyle} to={'/'}>
           <MenuItem

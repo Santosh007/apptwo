@@ -5,11 +5,12 @@ import Divider from 'material-ui/Divider';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import Menu from 'material-ui/svg-icons/navigation/menu';
 import {Link} from 'react-router';
+import AuthButton from './components/AuthButton';
 
 class NavDrawer extends Component {
   constructor(props) {
     super(props);
-    this.state = {open: false};
+    this.state = {open: false,authenticated : true};
   }
   handleToggle = () => this.setState({open: !this.state.open});
   render(){
@@ -19,13 +20,7 @@ class NavDrawer extends Component {
             <Menu/>
           </FloatingActionButton>
           <Drawer open = {this.state.open}>
-            <div
-            style = {
-              { height: '200px',
-                width: '100%',
-                backgroundColor : 'salmon'
-            }}
-            ></div>
+            <AuthButton/>
             <Divider/>
             <Link to={'/'}>
             <MenuItem

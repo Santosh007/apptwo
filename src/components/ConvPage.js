@@ -1,63 +1,61 @@
 import React from 'react';
-import Paper from 'material-ui/Paper';
-import TextField from 'material-ui/TextField';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/send';
+import { connect } from 'react-redux';
+import Scrollbars from 'react-custom-scrollbars';
 import {List, ListItem} from 'material-ui/List';
+import Paper from 'material-ui/Paper';
+import PropTypes from 'prop-types';
+import {socket} from '../apis/CatchupConvApi';
+import {receiveMessage} from '../actions';
+import actions from '../constants'
 
-const centerStyle = {
-  height: 400,
-  width: '50%',
-  minWidth:400,
-  margin: 10,
-  textAlign: 'center',
-  display: 'inline-block'
-};
-
-const msgWriterStyle = {
-  width: '46%',
-  minWidth:345,
-  margin: 10,
-  textAlign: 'bottom',
-  display: 'inline-block'
-};
-
-const holderStyle = {
-  textAlign : 'center'
-};
-
-function sendMsg(){
-  let hst=  window.location.host;
-	let pth= window.location.pathname;
-	let proto = window.location.protocol;
-  alert(hst);
-  alert(pth);
+function mapStateToProps(state) {
+    return {
+        messages: state.messages
+    }
 }
 
-const conversationHolder = function(){
-  return (<div>
-    <div>
-      <Paper zDepth={1}>
-        <List>
-          <ListItem primaryText="Inbox" />
-          <ListItem primaryText="Starred" />
-          <ListItem primaryText="Sent mail" />
-          <ListItem primaryText="Drafts" />
-          <ListItem primaryText="Inbox" />
-        </List>
-      </Paper>
-    </div>
-    <div>
-      <TextField
-        multiLine={true}
-        rows={1}
-        rowsMax={3}
-        hintText="Write message....."/>
-        <FloatingActionButton onClick = {sendMsg}>
-          <ContentAdd />
-        </FloatingActionButton>
-    </div>
-  </div>);
+class ConvPage extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+      const style = {
+        receivedMsgStyle : {
+          marginBottom : 10,
+          backgroundColor: "papayawhip",
+          backgroundSize: 'initial',
+          width: '50%',
+          boxShadow: 'rgba(0, 0, 0, 0.16) 0px 3px 10px, rgba(0, 0, 0, 0.23) 0px 3px 10px'
+        },
+        sentMsgStyle : {
+          marginBottom : 10,
+          backgroundColor: 'rgba(45, 179, 111, 0.35)',
+          marginLeft: '50%',
+          boxShadow: 'rgba(0, 0, 0, 0.16) 0px 3px 10px, rgba(0, 0, 0, 0.23) 0px 3px 10px'
+        }
+      };
+
+        return (
+            <Paper zDepth={1}>
+              <Scrollbars
+                style={{ minHeight: '60vh' }}
+                >
+                  <List subheader="Chat Log" ref="conv">
+                        {this.props.messages.map(item => (
+                          (() => {
+                          if(null !== item)
+                          switch (item.type) {
+                                  case "sent":   return <ListItem key = {item.id} style = {style.sentMsgStyle} primaryText = {`${item.content}`}/>;
+                                  case "received": return <ListItem key = {item.id} style = {style.receivedMsgStyle} primaryText = {`${item.content}`}/>;
+                          }
+                        })()
+                        ))}
+                    </List>
+                  </Scrollbars>
+                </Paper>
+        )
+    }
 }
 
-export default conversationHolder;
+export default connect(mapStateToProps)(ConvPage)
