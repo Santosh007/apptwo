@@ -1,7 +1,7 @@
 import appReducer from './reducers';
+import {receiveMessage,userLeft} from '../actions';
 import C from '../constants';
-import {compose, createStore, applyMiddleware } from 'redux'
-import {socket} from '../apis/CatchupConvApi';
+import {compose, createStore, applyMiddleware } from 'redux';
 
 var websocket = null;
 
@@ -44,13 +44,12 @@ const wsmiddleware = store => next => action => {
       //websocket.onopen = () => store.dispatch({ type: 'WEBSOCKET:OPEN' });
 			websocket.onopen = () => alert("Joined.....!");
       //websocket.onclose = (event) => store.dispatch({ type: 'WEBSOCKET:CLOSE', payload: event });
-			websocket.onclose = (event) => alert("Left...!");
+			websocket.onclose = (event) =>{
+				store.dispatch(userLeft());
+				alert("Left..."+JSON.stringify(event))
+			}
       websocket.onmessage = (message) => {
-				let msg = JSON.parse(message.data);
-      	let date = new Date();
-      	msg.id = date.getTime();
-      	msg.type = "received";
-				store.dispatch({ type: C.RECEIVE_MESSAGE, payload: msg });
+				store.dispatch(receiveMessage(message));
 			}
 
       break;
@@ -71,26 +70,6 @@ const wsmiddleware = store => next => action => {
 
   return next(action);
 };
-
-/*const webSocketMiddleware = store => next => action => {
-    if(C.SEND_MESSAGE === action.type) {
-        if(null !== socket) {
-            socket.send(JSON.stringify(action.payload));
-        }
-    }
-    next(action)
-}
-
-const finalCreateStore = compose(
-    applyMiddleware(
-        consoleMessages,
-        webSocketMiddleware
-    )
-)(createStore)
-
-export default (initialState={}) => {
-		return finalCreateStore(appReducer, initialState);
-}*/
 
 export default (initialState={}) => {
 	return compose(applyMiddleware(consoleMessages,wsmiddleware))(createStore)(appReducer, initialState)

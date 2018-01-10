@@ -1,13 +1,29 @@
 import C from './constants';
 
-export function sendMessage(id,type,content,sender,received="",rcontent="",rsender="",rreceived="",isemo=false){
+export function userJoined(name, email, authenticated=true){
+    return {
+      type : C.USER_JOINED,
+      payload : {name, email, authenticated}
+    }
+}
+
+export const userLeft = (name="", email="", authenticated=false) =>({
+    type : C.USER_LEFT,
+    payload : {name, email, authenticated}
+})
+
+export function sendMessage(msg){
   return {
     type : C.SEND_MESSAGE,
-    payload : { id,type,content,sender,received,rcontent,rsender,rreceived,isemo}
+    payload : msg
   }
 }
 
-export function receiveMessage(msg){
+export function receiveMessage(message){
+  let msg = JSON.parse(message.data);
+  let date = new Date();
+  msg.id = date.getTime();
+  msg.type = "received";
   return {
     type : C.RECEIVE_MESSAGE,
     payload : msg

@@ -3,7 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import TextField from 'material-ui/TextField';
-import actions from '../constants'
+import {sendMessage} from '../actions'
 
 function mapStateToProps(state) {
     return {
@@ -30,7 +30,7 @@ function mapDispatchToProps(dispatch) {
                 rreceived : '',
                 isemo : false
               }
-                dispatch({ type: actions.SEND_MESSAGE, payload: message })
+                dispatch(sendMessage(message))
             }
         }
     }

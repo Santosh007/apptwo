@@ -1,6 +1,6 @@
 import User from './User';
 import { connect } from 'react-redux';
-import C from '../constants';
+import {userJoined,userLeft} from '../actions';
 
 
 const mapStateToProps = (state) => {
@@ -16,24 +16,14 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => (
   {
     join(user){
-      dispatch({
-        type:C.USER_JOINED,
-        payload : {
-          name : user.name,
-          email : user.email,
-          authenticated : user.authenticated
-        }
-      })
+      dispatch(
+				userJoined(user.name, user.email, user.authenticated)
+			)
     },
     leave(user){
-      dispatch({
-        type:C.USER_LEFT,
-        payload : {
-          name : user.name,
-          email : user.email,
-          authenticated : user.authenticated
-        }
-      })
+      dispatch(
+				userLeft(user.name, user.email, user.authenticated)
+			)
     }
   }
 )

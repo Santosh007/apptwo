@@ -2,11 +2,6 @@ import React, {Component} from 'react';
 import CatchupConvPage from '../components/CatchupConvPage';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import SwipeableViews from 'react-swipeable-views';
-import Paper from 'material-ui/Paper';
-import TextField from 'material-ui/TextField';
-import { connect } from 'react-redux';
-import {sendMessage} from '../actions';
-import C from '../constants';
 
 class Home extends Component {
   constructor(props) {

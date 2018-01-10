@@ -3,10 +3,6 @@ import { connect } from 'react-redux';
 import Scrollbars from 'react-custom-scrollbars';
 import {List, ListItem} from 'material-ui/List';
 import Paper from 'material-ui/Paper';
-import PropTypes from 'prop-types';
-import {socket} from '../apis/CatchupConvApi';
-import {receiveMessage} from '../actions';
-import actions from '../constants'
 
 function mapStateToProps(state) {
     return {
