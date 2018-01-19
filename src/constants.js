@@ -9,7 +9,9 @@ const constants = {
   BUDDY_JOINED : "BUDDY_JOINED",
   BUDDY_LEFT : "BUDDY_LEFT",
   ADD_ERROR : "ADD_ERROR",
-  CLEAR_ERROR : "CLEAR_ERROR"
+  CLEAR_ERROR : "CLEAR_ERROR",
+  OPEN_INFO : "OPEN_INFO",
+  CLOSE_INFO : "CLOSE_INFO"
 }
 
 export default constants

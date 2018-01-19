@@ -51,6 +51,20 @@ export function clearError(index){
   }
 }
 
+export const openInfo = (message="",open=true) => {
+  return {
+    type : C.OPEN_INFO,
+    payload : {message, open}
+  }
+}
+
+export const closeInfo = (message="",open=false) => {
+  return {
+    type : C.CLOSE_INFO,
+    payload : {message, open}
+  }
+}
+
 export function buddyJoined(name,email){
   return {
     type : C.BUDDY_JOINED,

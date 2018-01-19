@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import NavDrawerAppBar from '../components/NavDrawerAppBar';
+import Notification from '../components/Notification';
 import {Main} from '../tinycomps/TemplateComps';
 
 injectTapEventPlugin();
@@ -19,6 +20,7 @@ class Template extends Component {
             <Main>
               {this.props.children}
             </Main>
+            <Notification/>
           </div>
         </MuiThemeProvider>
       );

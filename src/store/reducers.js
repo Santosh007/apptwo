@@ -34,6 +34,18 @@ export const errors = (state=[], action) =>{
   }
 }
 
+
+export const info = (state=null, action) => {
+  switch (action.type) {
+    case C.OPEN_INFO:
+      return action.payload;
+    case C.CLOSE_INFO:
+      return action.payload;
+    default:
+      return state;
+  }
+}
+
 export const messages = (state=[], action)  => {
   console.log('Inside reducers '+JSON.stringify(action.type));
   switch (action.type) {
@@ -76,5 +88,6 @@ export default combineReducers({
   user,
   messages,
   buddies,
-  errors
+  errors,
+  info
 });

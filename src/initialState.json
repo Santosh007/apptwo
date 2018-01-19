@@ -26,5 +26,9 @@
       "email" : "xyz@catchup.com"
     }
   ],
-  "errors" : []
+  "errors" : [],
+  "info" : {
+    "message" : "",
+    "open" : false
+  }
 }

@@ -1,5 +1,5 @@
 import appReducer from './reducers';
-import {receiveMessage,userLeft} from '../actions';
+import {receiveMessage,userLeft,openInfo} from '../actions';
 import C from '../constants';
 import {compose, createStore, applyMiddleware } from 'redux';
 
@@ -42,11 +42,14 @@ const wsmiddleware = store => next => action => {
 
       // Attach the callbacks
       //websocket.onopen = () => store.dispatch({ type: 'WEBSOCKET:OPEN' });
-			websocket.onopen = () => alert("Joined.....!");
+			websocket.onopen = () => {
+				store.dispatch(openInfo("Joined...!",true));
+			}
       //websocket.onclose = (event) => store.dispatch({ type: 'WEBSOCKET:CLOSE', payload: event });
 			websocket.onclose = (event) =>{
 				store.dispatch(userLeft());
-				alert("Left..."+JSON.stringify(event))
+				store.dispatch(openInfo("Left......",true));
+				//alert("Left..."+JSON.stringify(event))
 			}
       websocket.onmessage = (message) => {
 				store.dispatch(receiveMessage(message));
