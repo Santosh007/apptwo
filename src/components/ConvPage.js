@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Scrollbars from 'react-custom-scrollbars';
+import Scrollbars from 'react-scrollbar';
 import {List, ListItem} from 'material-ui/List';
 import Paper from 'material-ui/Paper';
 
@@ -13,6 +13,28 @@ function mapStateToProps(state) {
 class ConvPage extends React.Component {
     constructor(props) {
         super(props);
+        this.count = 0;
+        this.height = 0
+        this.top = 0;
+        this.autoScroll = true;
+        this.handleScroll = this.handleScroll.bind(this)
+    }
+
+    handleScroll(scrollData){
+      console.log(scrollData);
+      this.height = scrollData.realHeight;
+      if(scrollData.topPosition < this.top){
+        this.autoScroll = false;
+      }else{
+        this.top = scrollData.topPosition;
+      }
+    }
+
+    componentDidUpdate() {
+      const { scrollbars } = this.refs;
+      if(this.autoScroll){
+        scrollbars.scrollYTo(this.height);
+      }
     }
 
     render() {
@@ -34,8 +56,11 @@ class ConvPage extends React.Component {
 
         return (
             <Paper zDepth={1}>
-              <Scrollbars
-                style={{ minHeight: '60vh' }}
+              <Scrollbars ref="scrollbars"
+                style={{ height: '60vh' }}
+                onScroll={this.handleScroll}
+                horizontal={false}
+                smoothScrolling={true}
                 >
                   <List subheader="Chat Log" ref="conv">
                         {this.props.messages.map(item => (

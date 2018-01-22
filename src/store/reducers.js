@@ -46,6 +46,17 @@ export const info = (state=null, action) => {
   }
 }
 
+export const emoticons = (state=null, action) => {
+  switch (action.type) {
+    case C.SHOW_EMOTICONS:
+      return action.payload;
+    case C.HIDE_EMOTICONS:
+      return action.payload;
+    default:
+      return state;
+  }
+}
+
 export const messages = (state=[], action)  => {
   console.log('Inside reducers '+JSON.stringify(action.type));
   switch (action.type) {
@@ -70,6 +81,17 @@ const messageExists = (state,action) => {
   return state.some(message => message.id === action.payload.id);
 }
 
+export const input = (state='', action) => {
+  switch (action.type) {
+    case C.INPUT_SUBMITTED:
+      return ''
+    case C.INPUT_CHANGED:
+      return action.payload
+    default:
+      return state
+  }
+}
+
 export const buddies = (state=[],action) => {
     switch (action.type) {
       case C.BUDDY_JOINED:
@@ -87,6 +109,8 @@ export const buddies = (state=[],action) => {
 export default combineReducers({
   user,
   messages,
+  input,
+  emoticons,
   buddies,
   errors,
   info

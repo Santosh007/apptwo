@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Paper from 'material-ui/Paper';
 import Input from './Input';
 import ConvPage from './ConvPage';
+import Emotions from './Emotions';
 
 class CatchupConvPage extends Component {
 
@@ -16,7 +17,7 @@ class CatchupConvPage extends Component {
         minHeight: '5vh',
         marginTop : 10,
         textAlign: 'bottom',
-        paddingBottom:0
+        paddingBottom:0,
       }
     };
 
@@ -27,6 +28,7 @@ class CatchupConvPage extends Component {
         </div>
         <Paper style = {style.writer} zDepth={2}>
           <Input/>
+          <Emotions/>
         </Paper>
       </div>
     );

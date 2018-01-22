@@ -16,6 +16,10 @@
     "isemo" : false
     }
   ],
+  "input" : "",
+  "emoticons": {
+    "open" : false
+  },
   "buddies" : [
     {
       "name" : "abd",

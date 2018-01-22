@@ -30,6 +30,20 @@ export function receiveMessage(message){
   }
 }
 
+export function inputSubmitted(){
+  return {
+    type : C.INPUT_SUBMITTED,
+    payload : ""
+  }
+}
+
+export function inputChanged(msgText){
+  return {
+    type : C.INPUT_CHANGED,
+    payload : msgText
+  }
+}
+
 export function removeMessage(id){
   return {
     type : C.REMOVE_MESSAGE,
@@ -62,6 +76,20 @@ export const closeInfo = (message="",open=false) => {
   return {
     type : C.CLOSE_INFO,
     payload : {message, open}
+  }
+}
+
+export const showEmoticons = (open=true) => {
+  return {
+    type : C.SHOW_EMOTICONS,
+    payload : {open}
+  }
+}
+
+export const hideEmotions = (open=false) => {
+  return {
+    type : C.HIDE_EMOTICONS,
+    payload : {open}
   }
 }
 

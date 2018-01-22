@@ -12,6 +12,7 @@
     "react-redux": "^5.0.6",
     "react-router": "^3.2.0",
     "react-scripts": "1.0.17",
+    "react-scrollbar": "^0.5.1",
     "react-swipeable-views": "^0.12.12",
     "react-tap-event-plugin": "^3.0.2",
     "react-websocket": "^2.0.0",
