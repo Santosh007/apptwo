@@ -1,6 +1,6 @@
 import User from './User';
 import { connect } from 'react-redux';
-import {userJoined,userLeft} from '../actions';
+import {userJoined, userLeft, openInfo} from '../actions';
 
 
 const mapStateToProps = (state) => {
@@ -16,9 +16,15 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => (
   {
     join(user){
-      dispatch(
-				userJoined(user.name, user.email, user.authenticated)
-			)
+			if(user.name) {
+				dispatch(
+					userJoined(user.name, user.email, user.authenticated)
+				)
+			} else{
+				dispatch(
+					openInfo("Invalid user name",true)
+				)
+			}
     },
     leave(user){
       dispatch(

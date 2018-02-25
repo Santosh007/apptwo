@@ -3,6 +3,16 @@ import { connect } from 'react-redux';
 import Scrollbars from 'react-scrollbar';
 import {List, ListItem} from 'material-ui/List';
 import Paper from 'material-ui/Paper';
+import {grey400, darkBlack, lightBlack} from 'material-ui/styles/colors';
+import Avatar from 'material-ui/Avatar';
+import Person from 'material-ui/svg-icons/social/person';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
+
+import IconButton from 'material-ui/IconButton';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
 
 function mapStateToProps(state) {
     return {
@@ -13,22 +23,35 @@ function mapStateToProps(state) {
 class ConvPage extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+    			shown: false,
+    		};
         this.count = 0;
         this.height = 0
         this.top = 0;
         this.autoScroll = true;
-        this.handleScroll = this.handleScroll.bind(this)
+        this.handleScroll = this.handleScroll.bind(this);
+        this.handleChangeSingle = this.handleChangeSingle.bind(this);
     }
 
     handleScroll(scrollData){
       console.log(scrollData);
       this.height = scrollData.realHeight;
       if(scrollData.topPosition < this.top){
-        this.autoScroll = false;
+        //this.autoScroll = false;
+        if(!this.state.shown){
+          this.setState({
+            shown: !this.state.shown
+          });
+        }
       }else{
         this.top = scrollData.topPosition;
       }
     }
+
+    handleChangeSingle(event, value){
+      alert("Some Alert...");
+    };
 
     componentDidUpdate() {
       const { scrollbars } = this.refs;
@@ -36,6 +59,19 @@ class ConvPage extends React.Component {
         scrollbars.scrollYTo(this.height);
       }
     }
+
+    handleReply = (content) => {
+      console.log(content);
+    }
+
+    /*toggle() {
+      const { scrollbars } = this.refs;
+      this.autoScroll = true;
+      scrollbars.scrollYTo(this.height);
+  		this.setState({
+  			shown: !this.state.shown
+  		});
+  	}*/
 
     render() {
       const style = {
@@ -51,8 +87,39 @@ class ConvPage extends React.Component {
           backgroundColor: 'rgba(45, 179, 111, 0.35)',
           marginLeft: '50%',
           boxShadow: 'rgba(0, 0, 0, 0.16) 0px 3px 10px, rgba(0, 0, 0, 0.23) 0px 3px 10px'
+        },
+        msgSpanStyle : {
+          marginBottom : 10,
+          backgroundColor: "papayawhip",
+          backgroundSize: 'initial',
+          width: '50%',
+          color: darkBlack,
+          boxShadow: 'rgba(0, 0, 0, 0.16) 0px 3px 10px, rgba(0, 0, 0, 0.23) 0px 3px 10px'
         }
       };
+
+      const iconButtonElement = (
+        <IconButton
+          touch={true}
+          tooltip="more"
+          tooltipPosition="bottom-left"
+        >
+          <MoreVertIcon color={grey400} />
+        </IconButton>
+      );
+
+      const rightIconMenu = (
+        <IconMenu iconButtonElement={iconButtonElement}
+          onRequestChange={this.handleChangeSingle}>
+          <MenuItem>Reply</MenuItem>
+          <MenuItem>Forward</MenuItem>
+          <MenuItem>Delete</MenuItem>
+        </IconMenu>
+      );
+
+      var shown = {
+  			display: this.state.shown ? "inline" : "none"
+  		};
 
         return (
             <Paper zDepth={1}>
@@ -68,7 +135,18 @@ class ConvPage extends React.Component {
                           if(null !== item)
                           switch (item.type) {
                                   case "sent":   return <ListItem key = {item.id} style = {style.sentMsgStyle} primaryText = {`${item.content}`}/>;
-                                  case "received": return <ListItem key = {item.id} style = {style.receivedMsgStyle} primaryText = {`${item.content}`}/>;
+                                  case "received": return <ListItem key = {item.id}
+                                  style = {style.receivedMsgStyle}
+                                  leftAvatar={<Avatar icon={<Person />} />}
+                                  primaryText = {`${item.sender}`}
+                                  secondaryText={
+                                                  <p>
+                                                    <span style={{color : darkBlack}}>{`${item.content}`}</span>
+                                                  </p>
+                                                }
+                                  onClick = {() => this.handleReply(item.content)}
+                                  rightIconButton={rightIconMenu}
+                                  />;
                           }
                         })()
                         ))}

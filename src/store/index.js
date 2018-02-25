@@ -1,9 +1,13 @@
 import appReducer from './reducers';
 import {receiveMessage,userLeft,openInfo} from '../actions';
 import C from '../constants';
+import root from 'window-or-global';
 import {compose, createStore, applyMiddleware } from 'redux';
 
 var websocket = null;
+const hst =  root.location.host;
+const pth = root.location.pathname;
+const proto = root.location.protocol;
 
 const consoleMessages = store => next => action => {
 
@@ -38,7 +42,11 @@ const wsmiddleware = store => next => action => {
       // Configure the object
 			//"ws://node-websocket-app2ws.7e14.starter-us-west-2.openshiftapps.com"
 			//action.payload.url
-      websocket = new WebSocket("ws://node-websocket-app2ws.7e14.starter-us-west-2.openshiftapps.com");
+			let uname = action.payload.name;
+			const catchupConvUrl = (proto === 'https:') ? 'wss://'+hst+pth+uname : 'ws://'+hst+pth+uname ;
+			//websocket = new WebSocket(catchupConvUrl);
+			websocket = new WebSocket("ws://micro-socket-app2ws.7e14.starter-us-west-2.openshiftapps.com/"+uname);
+      //websocket = new WebSocket("ws://node-websocket-app2ws.7e14.starter-us-west-2.openshiftapps.com");
 
       // Attach the callbacks
       //websocket.onopen = () => store.dispatch({ type: 'WEBSOCKET:OPEN' });
@@ -59,7 +67,11 @@ const wsmiddleware = store => next => action => {
 
     // User request to send a message
     case C.SEND_MESSAGE:
-      websocket.send(JSON.stringify(action.payload));
+			if(store.getState().user.authenticated){
+				websocket.send(JSON.stringify(action.payload));
+			} else {
+				store.dispatch(openInfo("Please join catchup...!",true));
+			}
       break;
 
     // User request to disconnect

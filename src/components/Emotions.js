@@ -42,7 +42,7 @@ class Emotions extends React.Component {
     ];
 
     const radios = [];
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 10; i++) {
       radios.push(
         <RadioButton
           key={i}
