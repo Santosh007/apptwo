@@ -9,10 +9,7 @@ import Person from 'material-ui/svg-icons/social/person';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
-import IconButton from 'material-ui/IconButton';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import IconMenu from 'material-ui/IconMenu';
-import MenuItem from 'material-ui/MenuItem';
+import OptionMenu from './OptionMenu';
 
 function mapStateToProps(state) {
     return {
@@ -31,7 +28,6 @@ class ConvPage extends React.Component {
         this.top = 0;
         this.autoScroll = true;
         this.handleScroll = this.handleScroll.bind(this);
-        this.handleChangeSingle = this.handleChangeSingle.bind(this);
     }
 
     handleScroll(scrollData){
@@ -49,10 +45,6 @@ class ConvPage extends React.Component {
       }
     }
 
-    handleChangeSingle(event, value){
-      alert("Some Alert...");
-    };
-
     componentDidUpdate() {
       const { scrollbars } = this.refs;
       if(this.autoScroll){
@@ -61,9 +53,8 @@ class ConvPage extends React.Component {
     }
 
     handleReply = (content) => {
-      console.log(content);
+      //console.log(content);
     }
-
     /*toggle() {
       const { scrollbars } = this.refs;
       this.autoScroll = true;
@@ -98,25 +89,6 @@ class ConvPage extends React.Component {
         }
       };
 
-      const iconButtonElement = (
-        <IconButton
-          touch={true}
-          tooltip="more"
-          tooltipPosition="bottom-left"
-        >
-          <MoreVertIcon color={grey400} />
-        </IconButton>
-      );
-
-      const rightIconMenu = (
-        <IconMenu iconButtonElement={iconButtonElement}
-          onRequestChange={this.handleChangeSingle}>
-          <MenuItem>Reply</MenuItem>
-          <MenuItem>Forward</MenuItem>
-          <MenuItem>Delete</MenuItem>
-        </IconMenu>
-      );
-
       var shown = {
   			display: this.state.shown ? "inline" : "none"
   		};
@@ -145,7 +117,7 @@ class ConvPage extends React.Component {
                                                   </p>
                                                 }
                                   onClick = {() => this.handleReply(item.content)}
-                                  rightIconButton={rightIconMenu}
+                                  rightIconButton = {(new OptionMenu(item)).render()}
                                   />;
                           }
                         })()

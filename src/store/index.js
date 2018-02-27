@@ -55,8 +55,12 @@ const wsmiddleware = store => next => action => {
 			}
       //websocket.onclose = (event) => store.dispatch({ type: 'WEBSOCKET:CLOSE', payload: event });
 			websocket.onclose = (event) =>{
-				store.dispatch(userLeft());
-				store.dispatch(openInfo("Left......",true));
+				if(store.getState().user.authenticated){
+					websocket = new WebSocket("ws://micro-socket-app2ws.7e14.starter-us-west-2.openshiftapps.com/"+store.getState().user.name);
+				}else{
+					store.dispatch(userLeft());
+					store.dispatch(openInfo("Left......",true));
+				}
 				//alert("Left..."+JSON.stringify(event))
 			}
       websocket.onmessage = (message) => {
