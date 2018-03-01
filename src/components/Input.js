@@ -12,7 +12,7 @@ import {
 
 function mapStateToProps(state) {
   return {
-    input: state.input,
+    input: state.input
   }
 }
 

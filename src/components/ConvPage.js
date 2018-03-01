@@ -31,7 +31,7 @@ class ConvPage extends React.Component {
     }
 
     handleScroll(scrollData){
-      console.log(scrollData);
+      //console.log(scrollData);
       this.height = scrollData.realHeight;
       if(scrollData.topPosition < this.top){
         //this.autoScroll = false;

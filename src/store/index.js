@@ -66,12 +66,17 @@ const wsmiddleware = store => next => action => {
       websocket.onmessage = (message) => {
 				store.dispatch(receiveMessage(message));
 			}
+			websocket.onerror = 	(error) => {
+				store.dispatch(openInfo("Error.."+error,true));
+			}
 
       break;
 
     // User request to send a message
     case C.SEND_MESSAGE:
-			if(store.getState().user.authenticated){
+			let userObj = store.getState().user;
+			if(userObj.authenticated){
+				action.payload.sender = userObj.name;
 				websocket.send(JSON.stringify(action.payload));
 			} else {
 				store.dispatch(openInfo("Please join catchup...!",true));
